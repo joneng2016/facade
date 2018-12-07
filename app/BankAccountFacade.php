@@ -47,6 +47,15 @@ class BankAccountFacade
     }
     public function depositCash($cashToDeposit)
     {
-    
+        $isActive = $this->acctChecker->accountActive($this->getAccountNumber());
+        $isCodeCorrect = $this->codeChecker->isCodeCorrect($this->getSecurityCode());
+        if($isActive && $isCodeCorrect) 
+        {
+            $this->fundsChecker->makeDeposit($cashToDeposit);
+            echo "Depósito: transação concluida <br>";
+            return;
+        }   
+        
+       echo "Depósito: transacao não realizada <br>"; 
     }
 }
